@@ -109,19 +109,59 @@ export function isToday(date: Date): boolean {
 }
 
 export async function requestNotificationPermission(): Promise<boolean> {
-  if (!("Notification" in window)) return false
+  if (!("Notification" in window)) {
+    console.warn("Notifications not supported in this browser")
+    return false
+  }
   if (Notification.permission === "granted") return true
   if (Notification.permission === "denied") return false
-  const permission = await Notification.requestPermission()
-  return permission === "granted"
+
+  try {
+    const permission = await Notification.requestPermission()
+    return permission === "granted"
+  } catch (error) {
+    console.error("Error requesting notification permission:", error)
+    return false
+  }
 }
 
 export function scheduleNotification(title: string, body: string, delayMs: number) {
+  if (!("Notification" in window) || Notification.permission !== "granted") {
+    console.warn("Notifications not permitted")
+    return
+  }
+
+  const showNotification = () => {
+    try {
+      // Use service worker if available (PWA)
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification(title, {
+            body,
+            icon: "/icon-192x192.jpg",
+            badge: "/icon-192x192.jpg",
+            tag: "activity-notification",
+            requireInteraction: true,
+          })
+        })
+      } else {
+        // Fallback for browsers without service worker
+        new Notification(title, {
+          body,
+          icon: "/icon-192x192.jpg",
+          badge: "/icon-192x192.jpg",
+          tag: "activity-notification",
+          requireInteraction: true,
+        })
+      }
+    } catch (error) {
+      console.error("Error showing notification:", error)
+    }
+  }
+
   if (delayMs <= 0) {
-    new Notification(title, { body, icon: "/icon-192.png" })
+    showNotification()
   } else {
-    setTimeout(() => {
-      new Notification(title, { body, icon: "/icon-192.png" })
-    }, delayMs)
+    setTimeout(showNotification, delayMs)
   }
 }

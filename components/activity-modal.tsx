@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { IconClock, IconLanguage, IconTypeface } from "@tabler/icons-react"
+import { IconClock, IconLanguageHiragana, IconLanguage } from "@tabler/icons-react"
 
 interface ActivityModalProps {
   open: boolean
@@ -51,8 +51,8 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="border-border bg-card sm:max-w-md">
-        <DialogHeader className="space-y-3 pb-2">
-          <DialogTitle className={`text-2xl font-bold ${language === "kh" ? "font-khmer" : ""}`}>
+        <DialogHeader className="pb-2">
+          <DialogTitle className={`text-2xl font-medium ${language === "kh" ? "font-khmer" : ""}`}>
             {activity ? t.editActivity : t.addActivity}
           </DialogTitle>
           <p className="text-sm text-muted-foreground">
@@ -63,8 +63,8 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
         <div className="space-y-5 py-4">
           {/* English Name */}
           <div className="space-y-2.5">
-            <Label htmlFor="name" className="text-sm font-semibold flex items-center gap-2">
-              <IconTypeface className="h-4 w-4 text-primary" />
+            <Label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
+              <IconLanguage size={23} className="text-primary" />
               English Name
             </Label>
             <Input
@@ -79,8 +79,8 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
 
           {/* Khmer Name */}
           <div className="space-y-2.5">
-            <Label htmlFor="nameKh" className="text-sm font-semibold flex items-center gap-2 font-khmer">
-              <IconLanguage className="h-4 w-4 text-primary" />
+            <Label htmlFor="nameKh" className="text-sm font-medium flex items-center gap-2 font-khmer">
+              <IconLanguageHiragana size={23} className="text-primary" />
               ឈ្មោះខ្មែរ
             </Label>
             <Input
@@ -94,8 +94,8 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
 
           {/* Duration */}
           <div className="space-y-2.5">
-            <Label htmlFor="duration" className={`text-sm font-semibold flex items-center gap-2 ${language === "kh" ? "font-khmer" : ""}`}>
-              <IconClock className="h-4 w-4 text-primary" />
+            <Label htmlFor="duration" className={`text-sm font-medium flex items-center gap-2 ${language === "kh" ? "font-khmer" : ""}`}>
+              <IconClock size={23} className="text-primary" />
               {t.duration}
             </Label>
             <div className="relative">

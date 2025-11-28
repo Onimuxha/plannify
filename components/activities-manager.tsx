@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { IconClipboardData, IconClock, IconEdit, IconPlus, IconTrash, IconX } from "@tabler/icons-react"
-import { Icon } from "@radix-ui/react-select"
 
 interface ActivitiesManagerProps {
   activities: Activity[]
@@ -67,7 +66,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
     <>
       <Button
         variant="ghost"
-        size="sm"
+        size="default"
         onClick={() => setIsDialogOpen(true)}
         className="gap-2 border border-white/30"
       >
@@ -86,7 +85,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                   <IconClipboardData className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h2 className={`text-xl font-bold ${language === "kh" ? "font-khmer" : ""}`}>
+                  <h2 className={`text-xl font-medium ${language === "kh" ? "font-khmer" : ""}`}>
                     {t.manageActivities}
                   </h2>
                   <p className="text-sm text-muted-foreground mt-0.5">
@@ -94,12 +93,14 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                   </p>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => setIsDialogOpen(false)}
+                variant="ghost"
+                size="icon"
                 className="p-2 hover:bg-accent rounded-lg transition-colors"
               >
                 <IconX className="h-5 w-5" />
-              </button>
+              </Button>
             </div>
 
             {/* Content */}
@@ -121,34 +122,34 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                   {activities.map((activity) => (
                     <div
                       key={activity.id}
-                      className="group relative bg-card hover:bg-accent/50 rounded-lg border border-border hover:border-primary/50 p-4 transition-all duration-200"
+                      className="group relative bg-card rounded-lg border border-border hover:border-primary/50 p-4 transition-all duration-200"
                     >
 
                       <div className="flex items-start justify-between gap-3 pl-2">
                         <div className="flex-1 min-w-0">
-                          <h3 className={`font-semibold mb-1 truncate ${language === "kh" ? "font-khmer" : ""}`}>
+                          <h3 className={`font-medium mb-1 truncate ${language === "kh" ? "font-khmer" : ""}`}>
                             {language === "kh" ? activity.nameKh : activity.name}
                           </h3>
                           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <IconClock className="h-3 w-3" />
+                            <IconClock size={15} />
                             <span>{activity.duration} min</span>
                           </div>
                         </div>
 
-                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex gap-1">
                           <button
                             onClick={() => handleEdit(activity)}
-                            className="p-2 hover:bg-primary/10 rounded-lg text-primary transition-colors"
+                            className="p-2 hover:bg-primary/20 rounded-lg text-primary transition-colors"
                             title="Edit"
                           >
-                            <IconEdit className="h-4 w-4" />
+                            <IconEdit size={18} />
                           </button>
                           <button
                             onClick={() => handleDeleteClick(activity.id)}
-                            className="p-2 hover:bg-destructive/10 rounded-lg text-destructive transition-colors"
+                            className="p-2 hover:bg-destructive/20 rounded-lg text-destructive transition-colors"
                             title="Delete"
                           >
-                            <IconTrash className="h-4 w-4" />
+                            <IconTrash size={18} />
                           </button>
                         </div>
                       </div>
@@ -182,7 +183,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
             </AlertDialogTitle>
             <AlertDialogDescription className={language === "kh" ? "font-khmer" : ""}>
               {language === "kh"
-                ? "សកម្មភាពនេះនឹងត្រូវបានលុបចេញជាស្ថាយី។ សកម្មភាពនេះមិនអាចត្រលប់វិញបានទេ។"
+                ? "សកម្មភាពនេះនឹងត្រូវបានលុបជាអចិន្ត្រៃយ៍។ សកម្មភាពនេះមិនអាចត្រលប់វិញបានទេ។"
                 : "This activity will be permanently deleted. This action cannot be undone."}
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -92,7 +92,6 @@ function ScheduleApp() {
         return
       }
 
-      // Calculate delay until activity start time
       const now = new Date()
       const { hours, minutes } = parseTime(activity.startTime)
       const activityTime = new Date()
@@ -112,7 +111,6 @@ function ScheduleApp() {
           description: `${t.reminderDescription} ${activity.startTime}`,
         })
       } else {
-        // Activity time has passed, notify immediately
         scheduleNotification(language === "kh" ? "ការរំលឹក" : "Reminder", `${activityName} - ${activity.startTime}`, 0)
         toast({
           title: t.reminderSet,
@@ -227,7 +225,16 @@ function ScheduleApp() {
     <div className="flex flex-col min-h-screen bg-background">
       <Header {...({ title: t.title } as any)} />
       <main className="flex-1 container mx-auto px-4 py-6 space-y-6">
-        <ActivitiesManager activities={activities} onUpdateActivities={handleUpdateActivities} />
+        <div className="flex items-center gap-2">
+          <ActivitiesManager
+            activities={activities}
+            onUpdateActivities={handleUpdateActivities}
+          />
+          <Button className="flex items-center gap-2" onClick={handleGenerateSchedule}>
+            <IconSparkles className="size-4 shrink-0" />
+            <span className="leading-none">{t.generateSchedule}</span>
+          </Button>
+        </div>
         <WeeklySchedule
           schedules={schedules}
           onToggleDayOff={handleToggleDayOff}
@@ -237,10 +244,6 @@ function ScheduleApp() {
           onUpdateActivityTime={handleUpdateActivityTime}
           onUpdateDayStartTime={handleUpdateDayStartTime}
         />
-        <Button onClick={handleGenerateSchedule} className="w-full glow-button">
-          <IconSparkles className="mr-2 h-4 w-4" />
-          {t.generateSchedule}
-        </Button>
       </main>
     </div>
   )
