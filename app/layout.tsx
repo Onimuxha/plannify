@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     siteName: "Wexly",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.jpg?v=1",
         width: 630,
-        height: 1200,
+        height: 630,
         alt: "Weekly Planner Preview",
       },
     ],
@@ -60,7 +60,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
-}>) {
+}>){
   return (
     <html lang="en" className="dark">
       <head>

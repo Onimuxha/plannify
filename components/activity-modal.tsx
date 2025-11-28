@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Clock, Type, Languages } from "lucide-react"
+import { IconClock, IconLanguage, IconTypeface } from "@tabler/icons-react"
 
 interface ActivityModalProps {
   open: boolean
@@ -64,7 +64,7 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
           {/* English Name */}
           <div className="space-y-2.5">
             <Label htmlFor="name" className="text-sm font-semibold flex items-center gap-2">
-              <Type className="h-4 w-4 text-primary" />
+              <IconTypeface className="h-4 w-4 text-primary" />
               English Name
             </Label>
             <Input
@@ -80,7 +80,7 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
           {/* Khmer Name */}
           <div className="space-y-2.5">
             <Label htmlFor="nameKh" className="text-sm font-semibold flex items-center gap-2 font-khmer">
-              <Languages className="h-4 w-4 text-primary" />
+              <IconLanguage className="h-4 w-4 text-primary" />
               ឈ្មោះខ្មែរ
             </Label>
             <Input
@@ -95,7 +95,7 @@ export function ActivityModal({ open, onClose, onSave, activity }: ActivityModal
           {/* Duration */}
           <div className="space-y-2.5">
             <Label htmlFor="duration" className={`text-sm font-semibold flex items-center gap-2 ${language === "kh" ? "font-khmer" : ""}`}>
-              <Clock className="h-4 w-4 text-primary" />
+              <IconClock className="h-4 w-4 text-primary" />
               {t.duration}
             </Label>
             <div className="relative">

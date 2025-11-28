@@ -15,7 +15,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { Plus, ListTodo, Edit2, Trash2, Clock, X } from "lucide-react"
+import { IconClipboardData, IconClock, IconEdit, IconPlus, IconTrash, IconX } from "@tabler/icons-react"
+import { Icon } from "@radix-ui/react-select"
 
 interface ActivitiesManagerProps {
   activities: Activity[]
@@ -70,7 +71,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
         onClick={() => setIsDialogOpen(true)}
         className="gap-2 border border-white/30"
       >
-        <ListTodo className="h-4 w-4" />
+        <IconClipboardData className="h-4 w-4" />
         <span className={language === "kh" ? "font-khmer" : ""}>{t.manageActivities}</span>
       </Button>
 
@@ -82,7 +83,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
             <div className="flex items-center justify-between p-6 border-b border-border">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-lg">
-                  <ListTodo className="h-5 w-5 text-primary" />
+                  <IconClipboardData className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h2 className={`text-xl font-bold ${language === "kh" ? "font-khmer" : ""}`}>
@@ -97,7 +98,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                 onClick={() => setIsDialogOpen(false)}
                 className="p-2 hover:bg-accent rounded-lg transition-colors"
               >
-                <X className="h-5 w-5" />
+                <IconX className="h-5 w-5" />
               </button>
             </div>
 
@@ -106,7 +107,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
               {activities.length === 0 ? (
                 <div className="text-center py-16">
                   <div className="p-4 bg-muted rounded-full w-fit mx-auto mb-4">
-                    <ListTodo className="h-12 w-12 text-muted-foreground" />
+                    <IconClipboardData className="h-12 w-12 text-muted-foreground" />
                   </div>
                   <h3 className={`text-lg font-semibold mb-2 ${language === "kh" ? "font-khmer" : ""}`}>
                     {t.noActivities}
@@ -129,7 +130,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                             {language === "kh" ? activity.nameKh : activity.name}
                           </h3>
                           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Clock className="h-3 w-3" />
+                            <IconClock className="h-3 w-3" />
                             <span>{activity.duration} min</span>
                           </div>
                         </div>
@@ -140,14 +141,14 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                             className="p-2 hover:bg-primary/10 rounded-lg text-primary transition-colors"
                             title="Edit"
                           >
-                            <Edit2 className="h-4 w-4" />
+                            <IconEdit className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteClick(activity.id)}
                             className="p-2 hover:bg-destructive/10 rounded-lg text-destructive transition-colors"
                             title="Delete"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <IconTrash className="h-4 w-4" />
                           </button>
                         </div>
                       </div>
@@ -164,7 +165,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                 className="w-full gap-2"
                 size="lg"
               >
-                <Plus className="h-5 w-5" />
+                <IconPlus className="h-5 w-5" />
                 <span className={language === "kh" ? "font-khmer" : ""}>{t.addActivity}</span>
               </Button>
             </div>

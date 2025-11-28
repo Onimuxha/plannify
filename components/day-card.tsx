@@ -28,7 +28,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { Sun, Briefcase, Clock, Bell, GripVertical, Settings2 } from "lucide-react"
+import { IconBell, IconBriefcase, IconClock, IconGripVertical, IconSettings2, IconSun } from "@tabler/icons-react"
 
 function SortableActivity({
   activity,
@@ -63,7 +63,7 @@ function SortableActivity({
         {...listeners}
         className="mt-0.5 cursor-grab touch-none text-muted-foreground transition-colors hover:text-foreground active:cursor-grabbing"
       >
-        <GripVertical className="h-4 w-4" />
+        <IconGripVertical className="h-4 w-4" />
       </button>
       <Checkbox
         checked={activity.completed}
@@ -80,7 +80,7 @@ function SortableActivity({
           onClick={onEditTime}
           className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
         >
-          <Clock className="h-3 w-3" />
+          <IconClock className="h-3 w-3" />
           {activity.startTime} - {activity.endTime}
         </button>
       </div>
@@ -90,7 +90,7 @@ function SortableActivity({
         className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
         onClick={onRemind}
       >
-        <Bell className="h-3 w-3" />
+        <IconBell className="h-3 w-3" />
       </Button>
     </div>
   )
@@ -191,7 +191,7 @@ export function DayCard({
                 </Badge>
               )}
               <Button variant="ghost" size="icon" className="h-6 w-6" onClick={handleEditDayTime}>
-                <Settings2 className="h-3 w-3" />
+                <IconSettings2 className="h-3 w-3" />
               </Button>
             </div>
           </div>
@@ -209,12 +209,12 @@ export function DayCard({
           >
             {isDayOff ? (
               <>
-                <Sun className="mr-2 h-4 w-4" />
+                <IconSun className="mr-2 h-4 w-4" />
                 <span className={language === "kh" ? "font-khmer" : ""}>{t.dayOff}</span>
               </>
             ) : (
               <>
-                <Briefcase className="mr-2 h-4 w-4" />
+                <IconBriefcase className="mr-2 h-4 w-4" />
                 <span className={language === "kh" ? "font-khmer" : ""}>{t.workDay}</span>
               </>
             )}

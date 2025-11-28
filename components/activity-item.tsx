@@ -6,7 +6,7 @@ import type { Activity } from "@/lib/data"
 import { useLanguage } from "@/lib/language-context"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
-import { GripVertical, Pencil, Trash2, Clock } from "lucide-react"
+import { IconClock, IconEdit, IconGripVertical, IconTrash } from "@tabler/icons-react"
 
 interface ActivityItemProps {
   activity: Activity
@@ -48,7 +48,7 @@ export function ActivityItem({
         {...listeners}
         className="cursor-grab touch-none text-muted-foreground transition-colors hover:text-foreground active:cursor-grabbing"
       >
-        <GripVertical className="h-4 w-4" />
+        <IconGripVertical className="h-4 w-4" />
       </button>
 
       <Checkbox
@@ -65,7 +65,7 @@ export function ActivityItem({
         </p>
         {showTime && startTime && endTime && (
           <p className="flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="h-3 w-3" />
+            <IconClock className="h-3 w-3" />
             {startTime} - {endTime}
           </p>
         )}
@@ -75,7 +75,7 @@ export function ActivityItem({
 
       <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => onEdit(activity)}>
-          <Pencil className="h-4 w-4" />
+          <IconEdit className="h-4 w-4" />
         </Button>
         <Button
           variant="ghost"
@@ -83,7 +83,7 @@ export function ActivityItem({
           className="h-8 w-8 text-destructive hover:text-destructive"
           onClick={() => onDelete(activity.id)}
         >
-          <Trash2 className="h-4 w-4" />
+          <IconTrash className="h-4 w-4" />
         </Button>
       </div>
     </div>

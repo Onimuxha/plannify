@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect, useCallback } from "react"
 import type { Activity, DaySchedule, ScheduledActivity } from "@/lib/data"
 import { useLanguage } from "@/lib/language-context"
@@ -14,12 +13,11 @@ import {
   scheduleNotification,
 } from "@/lib/schedule-utils"
 import { Header } from "@/components/header"
-import { ProgressBar } from "@/components/progress-bar"
 import { ActivitiesManager } from "@/components/activities-manager"
 import { WeeklySchedule } from "@/components/weekly-schedule"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
-import { Sparkles } from "lucide-react"
+import { IconSparkles } from '@tabler/icons-react';
 
 function ScheduleApp() {
   const { t, language } = useLanguage()
@@ -227,9 +225,8 @@ function ScheduleApp() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header title={t.title} />
+      <Header {...({ title: t.title } as any)} />
       <main className="flex-1 container mx-auto px-4 py-6 space-y-6">
-        <ProgressBar schedules={schedules} />
         <ActivitiesManager activities={activities} onUpdateActivities={handleUpdateActivities} />
         <WeeklySchedule
           schedules={schedules}
@@ -241,7 +238,7 @@ function ScheduleApp() {
           onUpdateDayStartTime={handleUpdateDayStartTime}
         />
         <Button onClick={handleGenerateSchedule} className="w-full glow-button">
-          <Sparkles className="mr-2 h-4 w-4" />
+          <IconSparkles className="mr-2 h-4 w-4" />
           {t.generateSchedule}
         </Button>
       </main>
