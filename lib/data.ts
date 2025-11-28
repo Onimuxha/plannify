@@ -40,7 +40,7 @@ export const daysOfWeek = [
 
 export const translations = {
   en: {
-    title: "Weekly Planner",
+    title: "wexly",
     addActivity: "Add Activity",
     editActivity: "Edit Activity",
     deleteActivity: "Delete",

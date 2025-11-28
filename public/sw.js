@@ -1,5 +1,11 @@
-const CACHE_NAME = "weekly-planner-v1"
-const urlsToCache = ["/", "/manifest.json"]
+const CACHE_NAME = "wexly-v1"
+const urlsToCache = [
+  "/",
+  "/manifest.json",
+  "/icon-192x192.jpg",
+  "/icon-512x512.jpg",
+];
+
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache)))
@@ -35,12 +41,14 @@ self.addEventListener("fetch", (event) => {
   )
 })
 
-self.addEventListener("push", (event) => {
-  const options = {
-    body: event.data ? event.data.text() : "Time for your activity!",
-    icon: "/icon-192x192.jpg",
-    badge: "/icon-192x192.jpg",
-    vibrate: [100, 50, 100],
-  }
-  event.waitUntil(self.registration.showNotification("Weekly Planner", options))
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        const clone = response.clone()
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
+        return response
+      })
+      .catch(() => caches.match(event.request))
+  )
 })
