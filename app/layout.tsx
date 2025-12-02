@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Wexly",
     images: [
       {
-        url: "/og-image.jpg?v=1",
+        url: "https://wexly.vercel.app/og-image.jpg?v=1",
         width: 630,
         height: 630,
         alt: " Wexly Preview",
@@ -37,7 +37,8 @@ export const metadata: Metadata = {
     title: "Wexly",
     description:
       "A modern weekly schedule planner app with drag-and-drop, random schedule generation, and PWA support.",
-    images: ["/og-image.jpg"],
+    images: ["https://wexly.vercel.app/og-image.jpg?v=1"]
+
   },
   icons: {
     icon: [
