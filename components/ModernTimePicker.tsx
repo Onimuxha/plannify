@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { IconClock, IconChevronUp, IconChevronDown } from "@tabler/icons-react";
+import { AltArrowDown, AltArrowUp, ClockCircle } from "@solar-icons/react";
 
 interface ModernTimePickerProps {
   value: string;
@@ -97,7 +97,7 @@ export function ModernTimePicker({
         className="flex items-center justify-between w-full px-4 py-2.5 bg-secondary border border-border rounded-lg hover:border-primary/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
       >
         <div className="flex items-center gap-2">
-          <IconClock className="h-4 w-4 text-muted-foreground" />
+          <ClockCircle weight="LineDuotone" className="w-5 h-5 text-muted-foreground" />
           <span className="font-medium text-sm">
             {hours}:{minutes} {period}
           </span>
@@ -120,7 +120,7 @@ export function ModernTimePicker({
                     onClick={() => changeHour(1)}
                     className="p-2 hover:bg-secondary rounded-md"
                   >
-                    <IconChevronUp className="h-5 w-5 text-foreground" />
+                    <AltArrowUp weight="LineDuotone" className="h-5 w-5 text-foreground" />
                   </button>
                   <div className="w-20 h-16 flex items-center justify-center bg-primary/10 border border-primary/20 rounded-xl">
                     <span className="text-3xl font-bold text-primary tabular-nums">
@@ -131,7 +131,7 @@ export function ModernTimePicker({
                     onClick={() => changeHour(-1)}
                     className="p-2 hover:bg-secondary rounded-md"
                   >
-                    <IconChevronDown className="h-5 w-5 text-foreground" />
+                    <AltArrowDown weight="LineDuotone" className="h-5 w-5 text-foreground" />
                   </button>
                   <span className="text-xs text-muted-foreground mt-1">
                     Hours
@@ -147,7 +147,7 @@ export function ModernTimePicker({
                     onClick={() => changeMinute(5)}
                     className="p-2 hover:bg-secondary rounded-md"
                   >
-                    <IconChevronUp className="h-5 w-5 text-foreground" />
+                    <AltArrowUp weight="LineDuotone" className="h-5 w-5 text-foreground" />
                   </button>
                   <div className="w-20 h-16 flex items-center justify-center bg-primary/10 border border-primary/20 rounded-xl">
                     <span className="text-3xl font-bold text-primary tabular-nums">
@@ -158,7 +158,7 @@ export function ModernTimePicker({
                     onClick={() => changeMinute(-5)}
                     className="p-2 hover:bg-secondary rounded-md"
                   >
-                    <IconChevronDown className="h-5 w-5 text-foreground" />
+                    <AltArrowDown weight="LineDuotone" className="h-5 w-5 text-foreground" />
                   </button>
                   <span className="text-xs text-muted-foreground mt-1">
                     Minutes

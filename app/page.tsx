@@ -17,7 +17,7 @@ import { ActivitiesManager } from "@/components/activities-manager"
 import { WeeklySchedule } from "@/components/weekly-schedule"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/use-toast"
-import { IconSparkles } from '@tabler/icons-react';
+import { Stars } from '@solar-icons/react'
 
 function ScheduleApp() {
   const { t, language } = useLanguage()
@@ -235,7 +235,7 @@ function ScheduleApp() {
             className="flex items-center gap-2 w-full sm:w-auto"
             onClick={handleGenerateSchedule}
           >
-            <IconSparkles className="size-4 shrink-0" />
+            <Stars weight="LineDuotone" className="h-5 w-5 shrink-0" />
             <span className="leading-none">{t.generateSchedule}</span>
           </Button>
         </div>

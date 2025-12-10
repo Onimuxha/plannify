@@ -15,7 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { IconClipboardData, IconClock, IconEdit, IconPlus, IconTrash, IconX } from "@tabler/icons-react"
+import { AddCircle, Clipboard, ClockCircle, CloseCircle, PenNewSquare, TrashBinTrash } from "@solar-icons/react"
 
 interface ActivitiesManagerProps {
   activities: Activity[]
@@ -70,7 +70,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
         onClick={() => setIsDialogOpen(true)}
         className="gap-2 border border-white/30"
       >
-        <IconClipboardData className="h-4 w-4" />
+        <Clipboard weight="LineDuotone" className="h-4 w-4" />
         <span className={language === "kh" ? "font-khmer" : ""}>{t.manageActivities}</span>
       </Button>
 
@@ -82,7 +82,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
             <div className="flex items-center justify-between p-6 border-b border-border">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-lg">
-                  <IconClipboardData className="h-5 w-5 text-primary" />
+                  <Clipboard weight="LineDuotone" className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h2 className={`text-xl font-medium ${language === "kh" ? "font-khmer" : ""}`}>
@@ -96,10 +96,9 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
               <Button
                 onClick={() => setIsDialogOpen(false)}
                 variant="ghost"
-                size="icon"
                 className="p-2 hover:bg-accent rounded-lg transition-colors"
               >
-                <IconX className="h-5 w-5" />
+                 <CloseCircle weight="LineDuotone" className="h-5 w-5 text-primary" />
               </Button>
             </div>
 
@@ -108,7 +107,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
               {activities.length === 0 ? (
                 <div className="text-center py-16">
                   <div className="p-4 bg-muted rounded-full w-fit mx-auto mb-4">
-                    <IconClipboardData className="h-12 w-12 text-muted-foreground" />
+                    <Clipboard weight="LineDuotone" className="h-12 w-12 text-muted-foreground" />
                   </div>
                   <h3 className={`text-lg font-semibold mb-2 ${language === "kh" ? "font-khmer" : ""}`}>
                     {t.noActivities}
@@ -131,7 +130,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                             {language === "kh" ? activity.nameKh : activity.name}
                           </h3>
                           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <IconClock size={15} />
+                            <ClockCircle weight="LineDuotone" className="h-4 w-4" />
                             <span>{activity.duration} min</span>
                           </div>
                         </div>
@@ -142,14 +141,14 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                             className="p-2 hover:bg-primary/20 rounded-lg text-primary transition-colors"
                             title="Edit"
                           >
-                            <IconEdit size={18} />
+                            <PenNewSquare weight="LineDuotone" className="h-5 w-5" />
                           </button>
                           <button
                             onClick={() => handleDeleteClick(activity.id)}
                             className="p-2 hover:bg-destructive/20 rounded-lg text-destructive transition-colors"
                             title="Delete"
                           >
-                            <IconTrash size={18} />
+                             <TrashBinTrash weight="LineDuotone" className="h-5 w-5" />
                           </button>
                         </div>
                       </div>
@@ -166,7 +165,7 @@ export function ActivitiesManager({ activities, onUpdateActivities }: Activities
                 className="w-full gap-2"
                 size="lg"
               >
-                <IconPlus className="h-5 w-5" />
+                <AddCircle weight="LineDuotone" className="h-5 w-5" />
                 <span className={language === "kh" ? "font-khmer" : ""}>{t.addActivity}</span>
               </Button>
             </div>

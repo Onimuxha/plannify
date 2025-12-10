@@ -26,13 +26,9 @@ import { isToday, requestNotificationPermission } from "@/lib/schedule-utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  IconBriefcase,
-  IconSettings2,
-  IconBriefcaseOff,
-} from "@tabler/icons-react";
 import { SortableActivity } from "./SortableActivity";
 import { EditActivityDialog, EditDayTimeDialog } from "./EditDoalogs";
+import { Case, CupHot, Settings } from "@solar-icons/react";
 
 interface DayCardProps {
   date: Date;
@@ -142,8 +138,8 @@ export function DayCard({
                   {t.today}
                 </Badge>
               )}
-              <Button variant="ghost" size="icon" onClick={handleEditDayTime}>
-                <IconSettings2 size={23} className="text-white" />
+              <Button variant="ghost" onClick={handleEditDayTime}>
+                <Settings weight="LineDuotone" className="w-5 h-5 text-white" />
               </Button>
             </div>
           </div>
@@ -161,14 +157,14 @@ export function DayCard({
           >
             {isDayOff ? (
               <>
-                <IconBriefcaseOff className="mr-2 h-4 w-4" />
+                <CupHot weight="LineDuotone" className="mr-2 w-5 h-5" />
                 <span className={language === "kh" ? "font-khmer" : ""}>
                   {t.dayOff}
                 </span>
               </>
             ) : (
               <>
-                <IconBriefcase className="mr-2 h-4 w-4" />
+                <Case weight="LineDuotone" className="mr-2 h-5 w-5" />
                 <span className={language === "kh" ? "font-khmer" : ""}>
                   {t.workDay}
                 </span>

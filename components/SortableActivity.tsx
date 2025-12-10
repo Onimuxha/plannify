@@ -3,18 +3,13 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { type ScheduledActivity } from "@/lib/data";
 import { Button } from "@/components/ui/button";
-import {
-  IconBell,
-  IconBellOff,
-  IconClock,
-  IconGripVertical,
-} from "@tabler/icons-react";
 import { PlayfulCheckbox } from "./ui/playful-checkbox";
 import {
   requestNotificationPermission,
   scheduleNotification,
   parseTime,
 } from "@/lib/schedule-utils";
+import { AlarmAdd, AlarmRemove, ClockCircle, ListVertical } from "@solar-icons/react";
 
 interface SortableActivityProps {
   activity: ScheduledActivity;
@@ -92,7 +87,7 @@ export function SortableActivity({
         {...listeners}
         className="mt-0.5 cursor-grab touch-none text-muted-foreground transition-colors hover:text-foreground active:cursor-grabbing"
       >
-        <IconGripVertical className="h-4 w-4" />
+        <ListVertical weight="LineDuotone" className="h-5 w-5" />
       </button>
       <div className="flex flex-col gap-1 w-full">
         <PlayfulCheckbox
@@ -120,7 +115,7 @@ export function SortableActivity({
           onClick={onEditTime}
           className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors ml-[1.9rem]"
         >
-          <IconClock className="h-3 w-3" />
+          <ClockCircle weight="LineDuotone" className="h-3 w-3" />
           {activity.startTime} - {activity.endTime}
         </button>
       </div>
@@ -131,9 +126,9 @@ export function SortableActivity({
         title={hasReminder ? "Reminder enabled" : "Reminder disabled"}
       >
         {hasReminder ? (
-          <IconBell size={30} className="text-yellow-500" />
+          <AlarmRemove weight="LineDuotone" className="w-5 h-5 text-yellow-500" />
         ) : (
-          <IconBellOff size={30} className="text-muted-foreground" />
+          <AlarmAdd weight="LineDuotone" className="w-5 h-5 text-muted-foreground" />
         )}
       </Button>
     </div>
