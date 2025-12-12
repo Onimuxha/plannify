@@ -5,10 +5,11 @@ import { type ScheduledActivity } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { PlayfulCheckbox } from "./ui/playful-checkbox";
 import {
-  requestNotificationPermission,
-  scheduleActivityNotification,
-  cancelActivityNotification,
-} from "@/lib/notification-system";
+  requestBackgroundNotificationPermission,
+  scheduleBackgroundNotification,
+  cancelBackgroundNotification,
+  backgroundNotifications,
+} from "@/lib/background-notifications";
 import { AlarmAdd, AlarmRemove, ClockCircle, ListVertical } from "@solar-icons/react";
 
 interface SortableActivityProps {
@@ -44,11 +45,13 @@ export function SortableActivity({
   const [hasReminder, setHasReminder] = useState<boolean>(
     () => !!(activity as any).hasReminder
   );
+  const [isProcessing, setIsProcessing] = useState(false);
 
+  // Cleanup notification when component unmounts
   useEffect(() => {
     return () => {
       if (hasReminder) {
-        cancelActivityNotification(activity.id);
+        cancelBackgroundNotification(activity.id);
       }
     };
   }, [activity.id, hasReminder]);
@@ -59,46 +62,93 @@ export function SortableActivity({
     willChange: isDragging ? 'transform' : 'auto',
   };
 
+  const showToast = (message: string, isSuccess: boolean = true) => {
+    const toast = document.createElement('div');
+    toast.className = `fixed bottom-4 right-4 ${
+      isSuccess ? 'bg-green-500' : 'bg-red-500'
+    } text-white px-4 py-3 rounded-lg shadow-lg z-[9999] flex items-center gap-2 font-medium animate-in fade-in slide-in-from-bottom-2`;
+    toast.innerHTML = `
+      <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.add('animate-out', 'fade-out', 'slide-out-to-bottom-2');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  };
+
   const handleReminderToggle = async () => {
-    if (!hasReminder) {
-      const permitted = await requestNotificationPermission();
-      
-      if (!permitted) {
-        alert('❌ Please enable notifications in your browser to receive reminders.');
-        return;
-      }
+    if (isProcessing) {
+      console.log('Already processing, please wait...');
+      return;
+    }
+    
+    setIsProcessing(true);
 
-      const activityName = language === "kh" ? activity.nameKh : activity.name;
-      const success = scheduleActivityNotification(
-        activity.id,
-        activityName,
-        activity.startTime
-      );
-
-      if (success) {
-        setHasReminder(true);
-        onRemind();
+    try {
+      if (!hasReminder) {
+        console.log('=== ENABLING REMINDER ===');
         
-        // Show confirmation
-        const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-in fade-in slide-in-from-bottom-2';
-        toast.textContent = `✅ Reminder set for ${activity.startTime}`;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
+        // Check if service worker is ready
+        if (!backgroundNotifications.isReady()) {
+          console.log('Service worker not ready, initializing...');
+          showToast('⏳ Initializing notifications...', true);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
+        // Request permission
+        console.log('Requesting permission...');
+        const permitted = await requestBackgroundNotificationPermission();
+        
+        if (!permitted) {
+          console.error('Permission denied');
+          showToast('❌ Notifications blocked. Check browser settings.', false);
+          setIsProcessing(false);
+          return;
+        }
+
+        console.log('Permission granted, scheduling notification...');
+
+        // Schedule the background notification
+        const activityName = language === "kh" ? activity.nameKh : activity.name;
+        
+        console.log('Activity details:', {
+          id: activity.id,
+          name: activityName,
+          time: activity.startTime,
+        });
+
+        const success = await scheduleBackgroundNotification(
+          activity.id,
+          activityName,
+          activity.startTime
+        );
+
+        if (success) {
+          setHasReminder(true);
+          onRemind();
+          showToast(`✅ Reminder set for ${activity.startTime}`, true);
+          console.log('✅ Reminder enabled successfully');
+        } else {
+          console.error('Failed to schedule notification');
+          showToast('❌ Failed to set reminder. Check console for errors.', false);
+        }
       } else {
-        alert('❌ Failed to schedule notification. Please try again.');
+        console.log('=== DISABLING REMINDER ===');
+        
+        // Cancel the notification
+        cancelBackgroundNotification(activity.id);
+        setHasReminder(false);
+        onRemind();
+        showToast('🔕 Reminder cancelled', true);
+        console.log('✅ Reminder disabled successfully');
       }
-    } else {
-      // Cancel the notification
-      cancelActivityNotification(activity.id);
-      setHasReminder(false);
-      onRemind();
-      
-      const toast = document.createElement('div');
-      toast.className = 'fixed bottom-4 right-4 bg-gray-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-in fade-in slide-in-from-bottom-2';
-      toast.textContent = '🔕 Reminder cancelled';
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3000);
+    } catch (error) {
+      console.error('❌ Reminder error:', error);
+      showToast('❌ Something went wrong. Check console.', false);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -108,7 +158,7 @@ export function SortableActivity({
       style={style}
       className={`group flex items-start gap-2 rounded-md border border-border bg-secondary/50 p-2 transition-all duration-200 hover:border-primary/30 ${
         activity.completed ? "opacity-60" : ""
-      } ${isDragging ? "opacity-50 shadow-lg z-50" : ""}`}
+      } ${isDragging ? "opacity-70 shadow-2xl scale-[1.02] z-50" : ""}`}
     >
       <button
         {...attributes}
@@ -151,10 +201,17 @@ export function SortableActivity({
         variant="ghost"
         size="icon"
         onClick={handleReminderToggle}
-        title={hasReminder ? "Click to disable reminder" : "Click to enable reminder"}
-        className="transition-all duration-150 hover:scale-110 active:scale-95"
+        disabled={isProcessing}
+        title={
+          hasReminder 
+            ? "🔔 Reminder ON - You'll get notified even if browser is closed!" 
+            : "Click to set a reminder for this activity"
+        }
+        className="transition-all duration-150 hover:scale-110 active:scale-95 disabled:opacity-50"
       >
-        {hasReminder ? (
+        {isProcessing ? (
+          <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        ) : hasReminder ? (
           <AlarmRemove weight="LineDuotone" className="w-5 h-5 text-yellow-500 animate-pulse" />
         ) : (
           <AlarmAdd weight="LineDuotone" className="w-5 h-5 text-muted-foreground" />
