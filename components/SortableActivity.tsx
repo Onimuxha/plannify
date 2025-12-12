@@ -60,15 +60,6 @@ export function SortableActivity({
     willChange: isDragging ? 'transform' : 'auto',
   };
 
-  const showToast = (message: string, isSuccess: boolean = true) => {
-    const toast = document.createElement('div');
-    toast.className = `fixed bottom-4 right-4 ${
-      isSuccess ? 'bg-green-500' : 'bg-red-500'
-    } text-white px-4 py-3 rounded-lg shadow-lg z-[9999] font-medium`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-  };
 
   const handleReminderToggle = async () => {
     if (isProcessing) return;
@@ -79,7 +70,6 @@ export function SortableActivity({
         const permitted = await requestBackgroundNotificationPermission();
         
         if (!permitted) {
-          showToast('Please enable notifications in browser settings', false);
           setIsProcessing(false);
           return;
         }
@@ -95,16 +85,13 @@ export function SortableActivity({
           setHasReminder(true);
           onRemind();
         } else {
-          showToast('Failed to set reminder', false);
         }
       } else {
         cancelBackgroundNotification(activity.id);
         setHasReminder(false);
         onRemind();
-        showToast('Reminder cancelled', true);
       }
     } catch (error) {
-      showToast('Something went wrong', false);
     } finally {
       setIsProcessing(false);
     }
