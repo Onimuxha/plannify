@@ -1,6 +1,6 @@
 {
   "name": "Wexly",
-  "short_name": "Planner",
+  "short_name": "Wexly",
   "description": "A modern weekly schedule planner app",
   "start_url": "/",
   "display": "standalone",

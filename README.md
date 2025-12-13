@@ -1,4 +1,4 @@
-# Weekly Schedule Planner
+# Wexly
 
 A futuristic, dark-themed weekly schedule planner app with Supabase integration for data persistence.
 
